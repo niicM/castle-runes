@@ -4,20 +4,26 @@ import functools
 # The actual spells the players see when they decode the rune spell
 # They all need to be the same length
 spell_phrases = """
-    @example#
-    @example#
-    @example#
+    @book##
+    @thing#
+    @soup##
+    @box###
+    @plany#
+    @fun###
 """.split()
 
 spell_len = len(spell_phrases[0])
 spell_count = len(spell_phrases)
 
-# The list of the whot runes encrypt a particular rune
+# The list of the runes that encrypt a particular rune
 # Could be a list...
 dep_list = {
-    1: (2,),
-    2: (3, 4),
-    3: ...,
+    0: (1,),
+    1: (2, 4),
+    2: (),
+    3: (4,),
+    4: (5,),
+    5: (),
 }
 
 # From a to z 
@@ -40,7 +46,7 @@ encoded_spell_phrases = [
 
 def combine(rune_a: list[int], rune_b: list[int]) -> list[int]:
     return [
-        (a + b) % 30
+        (a - b) % 30
         for (a, b) in zip(rune_a, rune_b)
     ]
 
@@ -69,8 +75,13 @@ encrypted_spell_phrases = [
 
 
 decoded_encrypted_spell_phrases = [
-    [alphabet_decode[c] for c in spell_phrase]
+    ''.join([alphabet_decode[c] for c in spell_phrase])
     for spell_phrase in encrypted_spell_phrases
 ]
 
-print(decoded_encrypted_spell_phrases)
+# print('\n'.join(decoded_encrypted_spell_phrases))
+
+for (i, decoded) in enumerate(decoded_encrypted_spell_phrases):
+    print(i, decoded)
+    
+    
