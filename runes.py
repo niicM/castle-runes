@@ -58,14 +58,13 @@ dep_list[spell_count - 1] = []
 
 
 log(dep_list)
-# From a to z 
 
 # The 30 symbols we use:
 #                  012345678901234567890123456789
 alphabet_decode = "abcdefg#hij@k!lmn$opqrstuvwxyz"
 alphabet_encode = {
     alphabet_decode[n]: n
-    for n in range(30)
+    for n in range(len(alphabet_decode))
 }
 
 encoded_spell_phrases = [
