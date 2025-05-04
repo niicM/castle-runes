@@ -2,12 +2,8 @@ import random
 import functools
 import sys
 
-run = len(sys.argv) > 1
 
-def nop(*args):
-    pass
-
-log = nop if run else print
+log = print
 
 # The actual spells the players see when they decode the rune spell
 # They all need to be the same length
