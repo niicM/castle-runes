@@ -50,24 +50,21 @@ log(f"{spell_len=} {spell_count=}")
 
 # The list of the runes that encrypt a particular rune
 # Could be a list...
-
+# If the dependencies is a list of length n, you need to add all the (n+1) 
+# runes to decode it.
+# The easiest configuartion is to make a single sequence:
 dep_list = {
     i: [i + 1]
     for i in range(29)
 }
-
-
-
  
 dep_list[29] = []
 
+
 log(dep_list)
 # From a to z 
-# alphabet_a_z = list((chr(ord('a') + i) for i in range(26))))
 
 # The 30 symbols we use:
-# We keep the special symbols coprime to 30,
-# only really important to the start 
 #                  012345678901234567890123456789
 alphabet_decode = "abcdefg#hij@k!lmn$opqrstuvwxyz"
 alphabet_encode = {
@@ -80,6 +77,8 @@ encoded_spell_phrases = [
     for spell_phrase in spell_phrases
 ] 
 
+# The combination can be by addind or substracting. 
+# By choosng to substract, decoding is easier.
 def combine(rune_a: list[int], rune_b: list[int]) -> list[int]:
     return [
         (a - b) % 30
@@ -134,17 +133,4 @@ for (i, decoded, spell) in zip(range(30), decoded_encrypted_spell_phrases, spell
     
 for public in range(spell_count):
     log(f"p {public:2}: {public_idx_to_real_idx[public]:2}")
-
-cards = [
-    [0, 3], [1, 4], [2, 7], [5, 8], [6, 9], [1, 4],
-    [10, 13], [11, 14], [12, 17], [15, 18], [16, 19], [11, 14], [16, 19], [11, 14],
-    [20, 23], [21, 24], [22, 27], [25, 28], [26, 29], [21, 24],
-]
-
-
-if run:
-    i1, i2 = cards[int(sys.argv[1])]
-    print(real_idx_to_public_idx[i1], decoded_encrypted_spell_phrases[i1])
-    print(real_idx_to_public_idx[i2], decoded_encrypted_spell_phrases[i2])
-
 
