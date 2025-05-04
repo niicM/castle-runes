@@ -51,10 +51,10 @@ log(f"{spell_len=} {spell_count=}")
 # The easiest configuartion is to make a single sequence:
 dep_list = {
     i: [i + 1]
-    for i in range(29)
+    for i in range(spell_count)
 }
  
-dep_list[29] = []
+dep_list[spell_count - 1] = []
 
 
 log(dep_list)
@@ -77,13 +77,13 @@ encoded_spell_phrases = [
 # By choosng to substract, decoding is easier.
 def combine(rune_a: list[int], rune_b: list[int]) -> list[int]:
     return [
-        (a - b) % 30
+        (a - b) % len(alphabet_encode)
         for (a, b) in zip(rune_a, rune_b)
     ]
 
 def random_msg(seed: int) -> list[int]:
     random.seed(seed)
-    return [random.randint(0, 29) for _ in range(spell_len)]
+    return [random.randint(0, spell_count - 1) for _ in range(spell_len)]
     
 @functools.cache
 def encrypted_spell(rune_idx: int) -> list[int]:
