@@ -62,9 +62,10 @@ log(dep_list)
 # The 30 symbols we use:
 #                  012345678901234567890123456789
 alphabet_decode = "abcdefg#hij@k!lmn$opqrstuvwxyz"
+alphabets_len = len(alphabet_decode)
 alphabet_encode = {
     alphabet_decode[n]: n
-    for n in range(len(alphabet_decode))
+    for n in range(alphabets_len)
 }
 
 encoded_spell_phrases = [
@@ -82,7 +83,7 @@ def combine(rune_a: list[int], rune_b: list[int]) -> list[int]:
 
 def random_msg(seed: int) -> list[int]:
     random.seed(seed)
-    return [random.randint(0, spell_count - 1) for _ in range(spell_len)]
+    return [random.randint(0, alphabets_len - 1) for _ in range(spell_len)]
     
 @functools.cache
 def encrypted_spell(rune_idx: int) -> list[int]:
