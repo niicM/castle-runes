@@ -110,8 +110,6 @@ decoded_encrypted_spell_phrases = [
     for spell_phrase in encrypted_spell_phrases
 ]
 
-# log('\n'.join(decoded_encrypted_spell_phrases))
-
 real_idx_to_public_idx = list(range(spell_count))
 
 random.seed(42)
@@ -120,9 +118,6 @@ public_idx_to_real_idx = {
     real_idx_to_public_idx[i]: i
     for i in range(spell_count)
 }
-
-#for (i, decoded) in enumerate(decoded_encrypted_spell_phrases):
-#    log(f"{i:2} ({real_idx_to_public_idx[i]:2})  {decoded}")
 
 for (i, decoded, spell) in zip(range(30), decoded_encrypted_spell_phrases, spell_phrases):
     log(f"{i:2} ({real_idx_to_public_idx[i]:2})  {decoded} {spell}")
