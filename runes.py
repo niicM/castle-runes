@@ -1,5 +1,13 @@
 import random
 import functools
+import sys
+
+run = len(sys.argv) > 1
+
+def nop(*args):
+    pass
+
+log = nop if run else print
 
 # The actual spells the players see when they decode the rune spell
 # They all need to be the same length
@@ -13,7 +21,7 @@ spell_phrases = """
     @true#gri!!!
     @avenger!!!!
     @true#fort!!
-    !!!!!!!!!!!!
+    @masked#one!
     @pixie#dust!
     @fey#folk!!!
     @glamour!!!!
@@ -22,8 +30,8 @@ spell_phrases = """
     @fair#one!!!
     @will#o#wisp
     @moss#child!
-    @dew#drops!!   
-    !!!!!!!!!!!!
+    @dew#drops!!  
+    @sprite!!!!!
     @dark#lord!!
     @nemesis!!!!
     @evil#queen!
@@ -33,12 +41,12 @@ spell_phrases = """
     @wicked#one!
     @menace!!!!!
     @corruption!
-    !!!!!!!!!!!!
+    @doom#bringe
 """.split()
 
 spell_len = len(spell_phrases[0])
 spell_count = len(spell_phrases)
-print(f"{spell_len=} {spell_count=}")
+log(f"{spell_len=} {spell_count=}")
 
 # The list of the runes that encrypt a particular rune
 # Could be a list...
@@ -48,14 +56,12 @@ dep_list = {
     for i in range(29)
 }
 
-for i in (9, 19, 29):
-    dep_list[i] = []
 
-dep_list[7].append(19)    
-dep_list[18].append(8)    
-dep_list[28].append(18)
 
-print(dep_list)
+ 
+dep_list[29] = []
+
+log(dep_list)
 # From a to z 
 # alphabet_a_z = list((chr(ord('a') + i) for i in range(26))))
 
@@ -109,7 +115,7 @@ decoded_encrypted_spell_phrases = [
     for spell_phrase in encrypted_spell_phrases
 ]
 
-# print('\n'.join(decoded_encrypted_spell_phrases))
+# log('\n'.join(decoded_encrypted_spell_phrases))
 
 real_idx_to_public_idx = list(range(spell_count))
 
@@ -120,8 +126,25 @@ public_idx_to_real_idx = {
     for i in range(spell_count)
 }
 
-for (i, decoded) in enumerate(decoded_encrypted_spell_phrases):
-    print(f"{i:2} ({real_idx_to_public_idx[i]:2})  {decoded}")
+#for (i, decoded) in enumerate(decoded_encrypted_spell_phrases):
+#    log(f"{i:2} ({real_idx_to_public_idx[i]:2})  {decoded}")
+
+for (i, decoded, spell) in zip(range(30), decoded_encrypted_spell_phrases, spell_phrases):
+    log(f"{i:2} ({real_idx_to_public_idx[i]:2})  {decoded} {spell}")
     
 for public in range(spell_count):
-    print(f"p {public:2}: {public_idx_to_real_idx[public]:2}")
+    log(f"p {public:2}: {public_idx_to_real_idx[public]:2}")
+
+cards = [
+    [0, 3], [1, 4], [2, 7], [5, 8], [6, 9], [1, 4],
+    [10, 13], [11, 14], [12, 17], [15, 18], [16, 19], [11, 14], [16, 19], [11, 14],
+    [20, 23], [21, 24], [22, 27], [25, 28], [26, 29], [21, 24],
+]
+
+
+if run:
+    i1, i2 = cards[int(sys.argv[1])]
+    print(real_idx_to_public_idx[i1], decoded_encrypted_spell_phrases[i1])
+    print(real_idx_to_public_idx[i2], decoded_encrypted_spell_phrases[i2])
+
+
